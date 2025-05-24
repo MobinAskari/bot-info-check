@@ -1,30 +1,4 @@
-import { BOT_INFO_FROM_BOT_INIT, UNPROTECTED_MAIN_INSTANCE_OF_BOT } from "./bot"
-
-async function checkProvidedBotInfo() {
-	console.log("Attempting to check the provided botInfo...")
-
-	// Regardless of whether we have provided it or not, initialize the bot
-	await UNPROTECTED_MAIN_INSTANCE_OF_BOT.init()
-
-	// Get the same info to compare against the locally provided value
-	// Because bot.init won't invalidate the provided value
-	const botInfo = await UNPROTECTED_MAIN_INSTANCE_OF_BOT.api.getMe()
-
-	// Check whether the provided botInfo object matches the one received from getMe
-	if (JSON.stringify(botInfo) !== JSON.stringify(BOT_INFO_FROM_BOT_INIT)) {
-		console.error(
-			"Invalid BOT_INFO_FROM_BOT_INIT provided\n",
-			"FROM getMe:",
-			botInfo,
-			"\n",
-			"USER PROVIDED:",
-			BOT_INFO_FROM_BOT_INIT
-		)
-		throw new Error("Invalid BOT_INFO_FROM_BOT_INIT provided")
-	}
-
-	console.log("botInfo was checked successfully...")
-}
+import { UNPROTECTED_MAIN_INSTANCE_OF_BOT } from "./bot"
 
 export const startInPolling = async () => {
 	await UNPROTECTED_MAIN_INSTANCE_OF_BOT.start()
@@ -50,8 +24,6 @@ export const setProductionWebhookEndpoint = async () => {
 
 const main = async () => {
 	const { NODE_ENV } = process.env
-
-	await checkProvidedBotInfo()
 
 	switch (NODE_ENV) {
 		case "development":

@@ -2,8 +2,9 @@
 	"scripts": {
 		"dev": "next dev",
 		"dev:bot": "tsx watch src/bot/main.ts",
-		"build": "pnpm build:bot && tsx src/bot/main.ts && next build",
-		"build:bot": "tsc --build tsconfig.bot.build.json"
+		"build": "pnpm build:botInfo && build:bot && tsx src/bot/main.ts && next build",
+		"build:bot": "tsc --build tsconfig.bot.build.json",
+		"build:botInfo": "tsx build.ts"
 	},
 	"dependencies": {
 		"dotenv": "^16.5.0",
